@@ -1,0 +1,41 @@
+
+<!-- src/app/app.component.html -->
+<div class="container  mt-5 mb-4">
+    <!-- Formulario de búsqueda -->
+    <div class="container  mt-3 ">
+      <div class="input-group mb-3">
+        <input [(ngModel)]="city" type="text" class="form-control" placeholder="Ingresa una ciudad" aria-label="Ciudad">
+        <button (click)="getWeatherForecast()" class="btn btn-primary">Buscar</button>
+      </div>
+    </div>
+  
+    <!-- Sección de carga o error -->
+    <div *ngIf="!weatherForecast && !errorMessage" class="text-center">
+      <p class="lead">Cargando pronóstico del clima...</p>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <!-- Sección del pronóstico -->
+    <div *ngIf="weatherForecast && !errorMessage">
+      <h2 class="text-center mb-4">Pronóstico del clima en {{ weatherForecast.location?.name | firstLetterUppercase }}</h2>
+
+        <div class="col px-2" *ngIf="weatherForecast.forecast && weatherForecast.forecast.forecastday">
+          <div class="row row-cols-1 row-cols-md-3 g-3  d-flex">
+          <div class="card col  h-100" *ngFor="let day of weatherForecast.forecast.forecastday">
+            <div class="card-body ">
+              <h5 class="card-title ">{{ day.date | date:'fullDate' | firstLetterUppercase }}</h5>
+              <p class="card-text"><strong>Máxima:</strong> {{ day.day.maxtemp_c }}°C</p>
+              <p class="card-text"><strong>Mínima:</strong> {{ day.day.mintemp_c }}°C</p>
+              <p><strong>Descripción:</strong> {{ getWeatherTranslation(day.day.condition.text) }}</p>
+              <p class="card-text"><strong>Humedad:</strong> {{ day.day.avghumidity }}%</p>
+            </div>
+        </div>
+        <div *ngIf="!weatherForecast.forecast || !weatherForecast.forecast.forecastday" class="alert alert-warning text-center">
+          <p>No hay datos de pronóstico disponibles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

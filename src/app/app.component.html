@@ -1,40 +1,59 @@
 
-<!-- src/app/app.component.html -->
-<div class="container  mt-5">
-  <!-- Formulario de búsqueda -->
-  <div class="container  mt-3">
-    <div class="input-group mb-3">
-      <input [(ngModel)]="city" type="text" class="form-control" placeholder="Ingresa una ciudad" aria-label="Ciudad">
-      <button (click)="getWeatherForecast()" class="btn btn-primary">Buscar</button>
+<body>
+  
+<!-- Barra de navegacion -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+  
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/eltiempo">El tiempo</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/acerca">Acerca de</a>
+        </li>
+        
+      </ul>
     </div>
   </div>
+</nav>
 
-  <!-- Sección de carga o error -->
-  <div *ngIf="!weatherForecast && !errorMessage" class="text-center">
-    <p class="lead">Cargando pronóstico del clima...</p>
-  </div>
-  <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
-    <p>{{ errorMessage }}</p>
-  </div>
+<main>
+  <router-outlet></router-outlet>
+</main>
 
-  <!-- Sección del pronóstico -->
-  <div *ngIf="weatherForecast && !errorMessage">
-    <h2 class="text-center mb-4">Pronóstico del clima en {{ weatherForecast.location?.name }}</h2>
-      <div class="col px-2" *ngIf="weatherForecast.forecast && weatherForecast.forecast.forecastday">
-        <div class="row row-cols-1 row-cols-md-3 g-3  d-flex">
-        <div class="card col  h-100" *ngFor="let day of weatherForecast.forecast.forecastday">
-          <div class="card-body ">
-            <h5 class="card-title first-letter-uppercase">{{ day.date | date:'fullDate' }}</h5>
-            <p class="card-text"><strong>Máxima:</strong> {{ day.day.maxtemp_c }}°C</p>
-            <p class="card-text"><strong>Mínima:</strong> {{ day.day.mintemp_c }}°C</p>
-            <p><strong>Descripción:</strong> {{ getWeatherTranslation(day.day.condition.text) }}</p>
-            <p class="card-text"><strong>Humedad:</strong> {{ day.day.avghumidity }}%</p>
-          </div>
+<footer class="bg-dark text-light py-4">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5>Sobre Nosotros</h5>
+        <p>Somos una empresa dedicada a proporcionar el tiempo.</p>
       </div>
-      <div *ngIf="!weatherForecast.forecast || !weatherForecast.forecast.forecastday" class="alert alert-warning text-center">
-        <p>No hay datos de pronóstico disponibles.</p>
+      <div class="col-md-4 mb-3">
+        <h5>Enlaces</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-light">Inicio</a></li>
+          <li><a href="#" class="text-light">Servicios</a></li>
+          <li><a href="#" class="text-light">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contacto</h5>
+        <p>Email: {{email}}</p>
+        <p>Teléfono: +123 456 789</p>
       </div>
     </div>
+    <div class="mt-3">
+      <p class="mb-0">&copy; 2024 Empresa. Todos los derechos reservados.</p>
+    </div>
   </div>
-</div>
-</div>
+</footer>
+</body>

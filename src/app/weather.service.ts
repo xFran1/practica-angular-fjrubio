@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { WeatherResponse } from './interfaces/Weather.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,9 @@ export class WeatherService {
   
   constructor(private http: HttpClient) { }
 
-  getWeatherForecast(city: string, days: number = 7): Observable<any> { // Renombrado y añadido días
+  getWeatherForecast(city: string, days: number = 7): Observable<WeatherResponse> { 
     const url = `${this.apiUrl}?key=${this.apiKey}&q=${city}&days=${days}&aqi=no`;
-    return this.http.get(url);
+    return this.http.get<WeatherResponse>(url);
   }
+  
 }
